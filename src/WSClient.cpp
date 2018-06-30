@@ -123,6 +123,7 @@ void WSClient::onWsError()
 
 void WSClient::onTextMessageReceived(const QString &message)
 {
+    qDebug() << "RECEIVED MESSAGE:" << message;
     QJsonParseError err;
     QJsonDocument jdoc = QJsonDocument::fromJson(message.toUtf8(), &err);
 
@@ -216,6 +217,7 @@ void WSClient::onTextMessageReceived(const QString &message)
     else if (rootobj["msg"] == "progress_detailed")
     {
         QJsonObject o = rootobj["data"].toObject();
+        qDebug() << "PROGRESS DETAILED:" << o;
         QString progressString = o["progress_message"].toString();
         // TODO: Add internationalization code here
         QJsonArray progressStringArgs = o["progress_message_args"].toArray();

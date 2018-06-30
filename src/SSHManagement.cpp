@@ -149,6 +149,7 @@ void SSHManagement::onServiceExists(const QString service, bool exists)
 
 void SSHManagement::handleProgressErrors(const QJsonObject &rootobj)
 {
+    qDebug() << "handle OBJECT" << rootobj;
     if (rootobj.contains("error") && rootobj["error"].toBool())
     {
         // Errors go into the log file.
@@ -197,7 +198,8 @@ void SSHManagement::handleProgressErrors(const QJsonObject &rootobj)
         ui->progressBarLoad->setValue(current);
         ui->stackedWidget->setCurrentWidget(ui->pageWait);
 
-        if (current == total)
+        // TODO: for some reason, on Windows, it sends current > total sometimes...
+        if (current >= total)
         {
             // If it's an intermediate step then show it's waiting for input on device.
             ui->progressBarLoad->setMaximum(0);
@@ -219,6 +221,7 @@ void SSHManagement::readStdOutLoadKeys()
     while (sshProcess->canReadLine())
     {
         QString line = sshProcess->readLine();
+        qDebug() << "READ LINE FROM MC-AGENT" << line;
         QJsonParseError err;
         QJsonDocument jdoc = QJsonDocument::fromJson(line.toUtf8(), &err);
 

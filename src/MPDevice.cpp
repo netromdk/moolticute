@@ -4416,6 +4416,7 @@ bool MPDevice::setDataNodeCb(AsyncJobs *jobs, int current,
         {"current", current + MOOLTIPASS_BLOCK_SIZE},
         {"msg", "WORKING on setDataNodeCb"}
     };
+    qDebug() << "SEND CB PROGRESS DATA:" << cbData;
     cbProgress(cbData);
 
     //send 32bytes packet

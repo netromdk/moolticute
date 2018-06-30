@@ -36,6 +36,7 @@ WSServerCon::~WSServerCon()
 
 void WSServerCon::sendJsonMessage(const QJsonObject &data)
 {
+    qDebug() << "SENDING JSON:" << data;
     QJsonDocument jdoc(data);
     wsClient->sendTextMessage(jdoc.toJson(QJsonDocument::JsonFormat::Compact));
     // wsClient->flush();
